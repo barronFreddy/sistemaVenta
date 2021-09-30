@@ -7,8 +7,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Usuarios</h4>
-                        <div class="data-tables">
-                            <table id="tblUsuarios" class="text-center">
+                        <div class="table-responsive">
+                            <table id="tblUsuarios" class="table table-light">
                                 <thead class="bg-light text-capitalize">
                                 <?php
                                         $indice=1;
@@ -18,7 +18,6 @@
                                     <th>usuario</th>
                                     <th>nombre</th>
                                     <th>apellido</th>
-                                    <th>caja</th>
                                     <th>rol</th>
                                     <th>estado</th>
                                     <th>acciones</th>
@@ -115,29 +114,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-gp">
-                                        <select id="caja" class="form-control" name="caja" required>
-                                            <?php foreach ($data['cajas'] as $row) { ?>
-                                            <option value="<?php echo $row['idCaja'];?>"><?php echo $row['nombreCaja']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-gp">
-                                        <select id="rol" class="form-control" name="rol" required>
-                                            <?php foreach ($data['roles'] as $row) { ?>
-                                            <option value="<?php echo $row['idRol'];?>"><?php echo $row['nombreRol']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="form-gp">
+                                    <select id="rol" class="form-control" name="rol" required>
+                                        <?php foreach ($data['roles'] as $row) { ?>
+                                        <option value="<?php echo $row['idRol'];?>"><?php echo $row['nombreRol']; ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
+                           
                             <div class="submit-btn-area">
                                 <button id="btnAccion" type="button" onclick = "registrarUsuario(event);"></button>
-                                <button class="btn btn-danger" id="btnAccion" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </form>
