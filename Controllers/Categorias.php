@@ -40,25 +40,24 @@ class Categorias extends Controller{
         $idCategoria = $_POST['idCategoria'];
         //$hash = md5($_POST['password']);
         if (empty($descripcion) || empty($linea)) {
-            $msg ="Todos los campos son obligatorios";
+            $msg = array('msg' => 'todos los campos son obligatorios', 'icono'=> 'warning');
+            //$msg ="Todos los campos son obligatorios";
         }else{
             if ($idCategoria == "") {
                 $data = $this->model->registrarCategorias($descripcion, $linea);
                 if ($data == "ok") {
-                    $msg = "si";
+                    $msg = array('msg' => 'Categoria registrada con exito!!', 'icono'=> 'success');
                 }else if ($data == "existe") {
-                    $msg = "La Categoria ya existe!!";
+                    $msg = array('msg' => 'La categoria ya exite!!', 'icono'=> 'warning');
                 }else{
-                    $msg = "error al registrar la Categoria";
+                    $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                 }
             }else {
                 $data = $this->model->modificarCategorias($descripcion,$linea, $idCategoria);
                 if ($data == "modificado") {
-                    $msg = "modificado";
-                }else if ($data == "existe") {
-                    $msg = "La Categoria ya existe!!";
+                    $msg = array('msg' => 'Categoria modificada con exito!!', 'icono'=> 'success');
                 }else{
-                    $msg = "error al modificar la Categoria";
+                    $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                 }
             }
         }
@@ -78,9 +77,9 @@ class Categorias extends Controller{
     {
         $data = $this->model->accionCategoria(0, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Categoria eliminada con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al eliminar el Categoria";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -91,9 +90,9 @@ class Categorias extends Controller{
     {
         $data = $this->model->accionCategoria(1, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Categoria reingresada con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al reingresar el Categoria";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'success');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
