@@ -51,23 +51,29 @@ class Proveedores extends Controller{
         $idUsuario = $_SESSION['idUsuario'];
         $idProveedor = $_POST['idProveedor'];
         if (empty($ci) || empty($tipoPersona) || empty($nombre) || empty($apellidoPaterno) || empty($direccion) || empty($telefono) ) {
-            $msg ="Todos los campos son obligatorios";
+            $msg = array('msg' => 'todos los campos son obligatorios', 'icono'=> 'warning');
+            //$msg ="Todos los campos son obligatorios";
         }else{
             if ($idProveedor == "") {
                     $data = $this->model->registrarProveedores($ci,$tipoPersona,$nombre,$apellidoPaterno,$apellidoMaterno,$nombreEmpresa,$direccion,$telefono,$idUsuario);
                     if ($data == "ok") {
-                        $msg = "si";
+                        $msg = array('msg' => 'Proveedor registrado con exito!!', 'icono'=> 'success');
+                        //$msg = "si";
                     }else if ($data == "existe") {
-                        $msg = "El Proveedor ya existe!!";
+                        $msg = array('msg' => 'El Proveedor ya existe!!', 'icono'=> 'warning');
+                        //$msg = "El Proveedor ya existe!!";
                     }else{
-                        $msg = "error al registrar el Proveedor";
+                        $msg = array('msg' => 'Error', 'icono'=> 'error');
+                        //$msg = "error al registrar el Proveedor";
                     }
             }else {
-                $data = $this->model->modificarProveedores($ci,$tipoPersona,$nombre,$apellidoPaterno,$apellidoMaterno,$nombreEmpresa,$direccion,$telefono,$idProveedor,$idUsuario);
+                $data = $this->model->modificarProveedores($ci,$tipoPersona,$nombre,$apellidoPaterno,$apellidoMaterno,$nombreEmpresa,$direccion,$telefono,$idUsuario,$idProveedor);
                 if ($data == "modificado") {
-                    $msg = "modificado";
+                    $msg = array('msg' => 'El Proveedor modificado con exito!!', 'icono'=> 'success');
+                    //$msg = "modificado";
                 }else{
-                    $msg = "error al modificar el Proveedor";
+                    $msg = array('msg' => 'Error al mod Proveedor ya existe!!', 'icono'=> 'error');
+                    //$msg = "error al modificar el Proveedor";
                 }
             }
         }
@@ -87,9 +93,11 @@ class Proveedores extends Controller{
     {
         $data = $this->model->accionProveedores(0, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'El Proveedor eliminado!!', 'icono'=> 'success');
+            //$msg = "ok";
         }else {
-            $msg = "error al eliminar el Proveedor";
+            $msg = array('msg' => 'error!!', 'icono'=> 'error');
+            //$msg = "error al eliminar el Proveedor";
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -100,9 +108,9 @@ class Proveedores extends Controller{
     {
         $data = $this->model->accionProveedores(1, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'El Proveedor reingresado!!', 'icono'=> 'success');
         }else {
-            $msg = "error al reingresar el Proveedor";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
