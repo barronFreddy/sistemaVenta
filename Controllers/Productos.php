@@ -39,6 +39,7 @@ class Productos extends Controller{
     {
         $codigo = $_POST['codigo'];
         $modelo = $_POST['modelo'];
+        $stock = $_POST['stock'];
         $precioVenta = $_POST['precioVenta'];
         $precioCompra = $_POST['precioCompra'];
         $marca = $_POST['marca'];
@@ -46,24 +47,25 @@ class Productos extends Controller{
         $idUsuario = $_SESSION['idUsuario'];
         $idProducto = $_POST['idProducto'];
 
-        if (empty($codigo) || empty($modelo) || empty($precioVenta) || empty($precioCompra) || empty($marca) || empty($categoria)) {
-            $msg ="Todos los campos son obligatorios";
+        if (empty($codigo) || empty($modelo) || empty($stock) || empty($precioVenta) || empty($precioCompra) || empty($marca) || empty($categoria)) {
+            $msg = array('msg' => 'todos los campos son obligatorios', 'icono'=> 'warning');
+            //$msg ="Todos los campos son obligatorios";
         }else{
             if ($idProducto == "") {
-                    $data = $this->model->registrarProductos($codigo,$modelo, $precioVenta,$precioCompra,$marca,$categoria,$idUsuario);
+                    $data = $this->model->registrarProductos($codigo,$modelo, $stock, $precioVenta,$precioCompra,$marca,$categoria,$idUsuario);
                     if ($data == "ok") {
-                        $msg = "si";
+                        $msg = array('msg' => 'Producto registrado con exito!!', 'icono'=> 'success');
                     }else if ($data == "existe") {
-                        $msg = "El Modelo ya existe!!";
+                        $msg = array('msg' => 'El modelo de producto registrado ya existe!!', 'icono'=> 'warning');
                     }else{
-                        $msg = "error al registrar el Modelo";
+                        $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                     }
             }else {
-                $data = $this->model->modificarProductos($codigo,$modelo, $precioVenta,$precioCompra,$marca,$categoria, $idProducto,$idUsuario);
+                $data = $this->model->modificarProductos($codigo,$modelo, $stock, $precioVenta,$precioCompra,$marca,$categoria, $idProducto,$idUsuario);
                 if ($data == "modificado") {
-                    $msg = "modificado";
+                    $msg = array('msg' => 'Produco modificado!!', 'icono'=> 'success');
                 }else{
-                    $msg = "error al modificar el Modelo";
+                    $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                 }
             }
         }
@@ -83,9 +85,9 @@ class Productos extends Controller{
     {
         $data = $this->model->accionProductos(0, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'El Producto eliminado!!', 'icono'=> 'success');
         }else {
-            $msg = "error al eliminar el Producto";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -96,9 +98,9 @@ class Productos extends Controller{
     {
         $data = $this->model->accionProductos(1, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Producto reingresado!!', 'icono'=> 'success');
         }else {
-            $msg = "error al reingresar el Producto";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
