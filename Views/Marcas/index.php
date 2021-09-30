@@ -7,8 +7,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Marcas</h4>
-                        <div class="data-tables">
-                            <table id="tblMarcas" class="text-center">
+                        <div class="table-responsive">
+                            <table id="tblMarcas" class="table table-light">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
                                     <th>#</th>
