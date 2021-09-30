@@ -49,7 +49,7 @@ class ProveedoresModel extends Query{
         return $data;
     }
     
-    public function modificarProveedores(string $ci,string $tipoPersona, string $nombre, string $apellidoPaterno, string $apellidoMaterno,string $nombreEmpresa, string $direccion, int $telefono, int $idProveedor, int $idUsuario)
+    public function modificarProveedores(string $ci,string $tipoPersona, string $nombre, string $apellidoPaterno, string $apellidoMaterno,string $nombreEmpresa, string $direccion, int $telefono, int $idUsuario, int $idProveedor)
     {
         $this->ci = $ci;
         $this->tipoPersona = $tipoPersona;
@@ -63,7 +63,7 @@ class ProveedoresModel extends Query{
         $this->idProveedor = $idProveedor;
 
         $sql = "UPDATE proveedores SET ci = ?, tipoPersona=?, nombre=?, apellidoPaterno=?, apellidoMaterno=?, nombreEmpresa=?, direccion=?, telefono=?, idUsuario=? WHERE idProveedor =?";
-        $datos = array($this->ci, $this->tipoPersona, $this->nombre, $this->apellidoPaterno, $this->apellidoMaterno, $this->nombreEmpresa, $this->direccion, $this->telefono, $this->idProveedor,$this->idUsuario);
+        $datos = array($this->ci, $this->tipoPersona, $this->nombre, $this->apellidoPaterno, $this->apellidoMaterno, $this->nombreEmpresa, $this->direccion, $this->telefono,$this->idUsuario, $this->idProveedor);
         $data=$this->save($sql,$datos);
         if ($data == 1) {
             $res = "modificado";
