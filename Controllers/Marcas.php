@@ -39,25 +39,25 @@ class Marcas extends Controller{
         $idMarca = $_POST['idMarca'];
         //$hash = md5($_POST['password']);
         if (empty($nombreMarca)) {
-            $msg ="Todos los campos son obligatorios";
+            $msg = array('msg' => 'todos los campos son obligatorios', 'icono'=> 'warning');
+            //$msg ="Todos los campos son obligatorios";
         }else{
             if ($idMarca == "") {
                 $data = $this->model->registrarMarcas($nombreMarca);
                 if ($data == "ok") {
-                    $msg = "si";
+                    $msg = array('msg' => 'Marca registrada con exito!!', 'icono'=> 'success');
+                
                 }else if ($data == "existe") {
-                    $msg = "La marca ya existe!!";
+                    $msg = array('msg' => 'La marca ya existe!!', 'icono'=> 'warning');
                 }else{
-                    $msg = "error al registrar la marca";
+                    $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                 }
             }else {
                 $data = $this->model->modificarMarcas($nombreMarca, $idMarca);
                 if ($data == "modificado") {
-                    $msg = "modificado";
-                }else if ($data == "existe") {
-                    $msg = "La marca ya existe!!";
+                    $msg = array('msg' => 'Marca modificada con exito!!', 'icono'=> 'success');
                 }else{
-                    $msg = "error al modificar la marca";
+                    $msg = array('msg' => 'error!!', 'icono'=> 'error');
                 }
             }
         }
@@ -77,9 +77,9 @@ class Marcas extends Controller{
     {
         $data = $this->model->accionMarca(0, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Marca eliminada con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al eliminar el Marca";
+            $msg = array('msg' => 'error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -90,9 +90,9 @@ class Marcas extends Controller{
     {
         $data = $this->model->accionMarca(1, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Marca reingresada con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al reingresar el Marca";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
