@@ -7,13 +7,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Productos</h4>
-                        <div class="data-tables">
-                            <table id="tblProductos" class="text-center">
+                        <div class="table-responsive">
+                            <table id="tblProductos" class="table table-light">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
                                     <th>#</th>
                                     <th>Codigo</th>
                                     <th>Modelo</th>
+                                    <th>Stock</th>
                                     <th>Precio Venta</th>
                                     <th>Precio Compra</th>
                                     <th>Marca</th>
@@ -86,6 +87,11 @@
                             <div class="form-gp">
                                 <label for="modelo">modelo</label>
                                 <input type="text" id="modelo" name="modelo" required>
+                                <div class="text-danger"></div>
+                            </div>
+                            <div class="form-gp">
+                                <label for="stock">Stock</label>
+                                <input type="number" id="stock" name="stock" required>
                                 <div class="text-danger"></div>
                             </div>
                             <div class="row">
