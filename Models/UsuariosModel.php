@@ -1,7 +1,7 @@
 <?php
 class UsuariosModel extends Query{
 
-    private $usuario,$nombre,$apellido,$password,$idCaja,$idRol,$idUsuario,$estado;
+    private $usuario,$nombre,$apellido,$password,$idRol,$idUsuario,$estado;
     public function __construct()
     {
         parent::__construct();
@@ -20,8 +20,9 @@ class UsuariosModel extends Query{
     }
     public function getUsuarios()
     {
-        $sql = "SELECT u.*, c.idCaja AS id_caja, c.nombreCaja, r.idRol AS id_rol, r.nombreRol FROM usuarios u 
-        INNER JOIN cajas c ON u.idCaja = c.idCaja INNER JOIN roles r ON u.idRol = r.idRol";
+        $sql = "SELECT u.*, r.idRol AS id_rol, r.nombreRol 
+        FROM usuarios u 
+         INNER JOIN roles r ON u.idRol = r.idRol";
         $data = $this->selectAll($sql);
         return $data;
     }
@@ -31,27 +32,20 @@ class UsuariosModel extends Query{
         $data = $this->selectAll($sql);
         return $data;
     }
-    public function getCajas()
-    {
-        $sql = "SELECT * FROM cajas WHERE estado = 1";
-        $data = $this->selectAll($sql);
-        return $data;
-    }
-    public function registrarUsuario(string $usuario, string $nombre, string $apellido, string $password, int $idCaja, int $idRol)
+    public function registrarUsuario(string $usuario, string $nombre, string $apellido, string $password, int $idRol)
     {
         $this->usuario = $usuario;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->password = $password;
-        $this->idCaja = $idCaja;
         $this->idRol = $idRol;
 
         $verificar = "SELECT * FROM usuarios WHERE nombreUsuario = '$this->usuario'";
         $existe = $this->select($verificar);
 
         if (empty($existe)) {
-            $sql = "INSERT INTO usuarios(nombreUsuario, nombre, apellido, password, idCaja, idRol) VALUES (?,?,?,?,?,?)";
-            $datos = array($this->usuario, $this->nombre, $this->apellido,$this->password, $this->idCaja, $this->idRol);
+            $sql = "INSERT INTO usuarios(nombreUsuario, nombre, apellido, password, idRol) VALUES (?,?,?,?,?)";
+            $datos = array($this->usuario, $this->nombre, $this->apellido,$this->password, $this->idRol);
             $data=$this->save($sql,$datos);
             if ($data == 1) {
                 $res = "ok";
@@ -70,13 +64,18 @@ class UsuariosModel extends Query{
         $data = $this->select($sql);
         return $data;
     }
+    public function editarPass(string $pass, int $idUsuario)
+    {
+        $sql = "SELECT * FROM usuarios WHERE password = '$pass' AND idUsuario = $idUsuario";
+        $data = $this->select($sql);
+        return $data;
+    }
     
-    public function modificarUsuario(string $usuario, string $nombre, string $apellido, int $idCaja, int $idRol, int $idUsuario)
+    public function modificarUsuario(string $usuario, string $nombre, string $apellido, int $idRol, int $idUsuario)
     {
         $this->usuario = $usuario;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
-        $this->idCaja = $idCaja;
         $this->idRol = $idRol;
         $this->idUsuario = $idUsuario;
 
@@ -84,8 +83,8 @@ class UsuariosModel extends Query{
         $existe = $this->select($verificar);
 
         if (empty($existe)) {
-            $sql = "UPDATE usuarios SET nombreUsuario = ?, nombre=?, apellido=?, idCaja=?, idRol=? WHERE idUsuario =?";
-            $datos = array($this->usuario, $this->nombre, $this->apellido, $this->idCaja, $this->idRol, $this->idUsuario);
+            $sql = "UPDATE usuarios SET nombreUsuario = ?, nombre=?, apellido=?, idRol=? WHERE idUsuario =?";
+            $datos = array($this->usuario, $this->nombre, $this->apellido, $this->idRol, $this->idUsuario);
             $data=$this->save($sql,$datos);
             if ($data == 1) {
                 $res = "modificado";
@@ -105,6 +104,14 @@ class UsuariosModel extends Query{
         $this->estado = $estado;
         $sql = "UPDATE usuarios SET estado = ? WHERE idUsuario = ?";
         $datos = array($this->estado, $this->idUsuario);
+        $data = $this->save($sql,$datos);
+        return $data;
+    }
+
+    public function modificarPass(string $clave, int $idUsuario)
+    {
+        $sql = "UPDATE usuarios SET password = ? WHERE idUsuario = ?";
+        $datos = array($clave, $idUsuario);
         $data = $this->save($sql,$datos);
         return $data;
     }
