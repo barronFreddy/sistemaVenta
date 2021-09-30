@@ -47,23 +47,24 @@ class Clientes extends Controller{
         $idUsuario = $_SESSION['idUsuario'];
         $idCliente = $_POST['idCliente'];
         if (empty($ci) || empty($nombre) || empty($apellidoPaterno) || empty($apellidoMaterno) || empty($telefono) || empty($direccion)) {
-            $msg ="Todos los campos son obligatorios";
+            $msg = array('msg' => 'todos los campos son obligatorios', 'icono'=> 'warning');
+            //$msg ="Todos los campos son obligatorios";
         }else{
             if ($idCliente == "") {
                     $data = $this->model->registrarClientes($ci,$nombre, $apellidoPaterno,$apellidoMaterno,$telefono,$direccion,$idUsuario);
                     if ($data == "ok") {
-                        $msg = "si";
+                        $msg = array('msg' => 'Cliente registrada con exito!!', 'icono'=> 'success');
                     }else if ($data == "existe") {
-                        $msg = "El carnet de identidad ya existe!!";
+                        $msg = array('msg' => 'El cliente ya exite!!', 'icono'=> 'warning');
                     }else{
-                        $msg = "error al registrar el Cliente";
+                        $msg = array('msg' => 'Error!!', 'icono'=> 'error');
                     }
             }else {
                 $data = $this->model->modificarClientes($ci,$nombre, $apellidoPaterno,$apellidoMaterno,$telefono,$direccion, $idCliente,$idUsuario);
                 if ($data == "modificado") {
-                    $msg = "modificado";
+                    $msg = array('msg' => 'Cliente modificado con exito!!', 'icono'=> 'success');
                 }else{
-                    $msg = "error al modificar el cliente";
+                    $msg = array('msg' => 'error!!', 'icono'=> 'error');
                 }
             }
         }
@@ -83,9 +84,9 @@ class Clientes extends Controller{
     {
         $data = $this->model->accionCliente(0, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Cliente eliminado con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al eliminar el Cliente";
+            $msg = array('msg' => 'Error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
@@ -96,9 +97,9 @@ class Clientes extends Controller{
     {
         $data = $this->model->accionCliente(1, $id);
         if ($data == 1) {
-            $msg = "ok";
+            $msg = array('msg' => 'Cliente reingresado con exito!!', 'icono'=> 'success');
         }else {
-            $msg = "error al reingresar el Cliente";
+            $msg = array('msg' => 'error!!', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
