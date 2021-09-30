@@ -7,8 +7,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="header-title">Clientes</h4>
-                        <div class="data-tables">
-                            <table id="tblClientes" class="text-center">
+                        <div class="table-responsive">
+
+                            <table id="tblClientes"class="table table-light">
                                 <thead class="bg-light text-capitalize">
                                     <tr>
                                     <th>#</th>
@@ -20,7 +21,10 @@
                                     <th>acciones</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
